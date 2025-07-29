@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Accueil - GC Trad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Resets & Body */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #0d0d0d; /* Dark background like Engent's base */
+            scroll-behavior: smooth;
+        }
+
+        /* Variables CSS */
+        :root {
+            --primary-color: #ffb800; /* Yellow/Orange */
+            --secondary-color: #ff8800; /* Darker Orange */
+            --text-white: #ffffff;
+            --text-dark: #000000;
+            --bg-overlay-dark: rgba(0, 0, 0, 0.7); /* Darker overlay for text readability */
+            --bg-overlay-light: rgba(0, 0, 0, 0.4);
+            --transition: all 0.3s ease-in-out;
+            --section-bg-dark: #1a1a1a; /* For sections like "Our Work" or "About" */
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem; /* Increased padding */
+            background: rgba(0, 0, 0, 0.7); /* More opaque header */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: clamp(1.8rem, 4vw, 2.8rem); /* Larger logo */
+            color: var(--primary-color);
+            font-weight: 700; /* Bolder */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem; /* More space between links */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-white);
+            font-size: clamp(1rem, 1.5vw, 1.2rem); /* Slightly larger font */
+            transition: var(--transition);
+            padding: 0.5rem 0; /* Vertical padding only */
+            position: relative; /* For underline effect */
+        }
+
+        .nav-links a::after { /* Underline effect */
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background-color: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        button {
+            padding: 0.8rem 1.8rem; /* Larger button */
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 5px; /* Less rounded */
+            font-weight: 600; /* Bolder text */
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            text-transform: uppercase; /* Uppercase text */
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px); /* Slight lift */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.95); /* Darker dropdown background */
+            min-width: 220px; /* Wider dropdown */
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.5); /* Stronger shadow */
+            z-index: 1;
+            border-radius: 8px;
+            padding: 0.5rem 0; /* Reduced padding */
+            top: 100%;
+            left: 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            padding: 0.8rem 1.5rem; /* More padding for items */
+            border-bottom: 1px solid rgba(255,255,255,0.08); /* Lighter separator */
+            color: var(--text-white);
+            font-size: 1rem; /* Fixed size */
+            white-space: nowrap;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.08); /* Subtle hover background */
+            color: var(--primary-color);
+        }
+
+        /* Language Toggle Icon */
+        .lang-toggle {
+            font-size: 1.5rem; /* Icon size */
+            color: var(--text-white);
+            cursor: pointer;
+            margin-left: 1rem; /* Space from button */
+            transition: var(--transition);
+        }
+
+        .lang-toggle:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        /* Section Layout (Common for all full-width sections) */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem; /* Generous padding */
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: var(--text-white);
+        }
+
+        .section-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-overlay-dark); /* Default dark overlay */
+            z-index: 1;
+        }
+
+        .section-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-image: url('acceuil1.png');
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-white);
+            position: relative;
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        .hero-section .section-overlay {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.3)); /* Lighter gradient for hero */
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            font-weight: 400;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+        }
+
+        .hero-buttons button {
+            margin: 0 1rem;
+            min-width: 180px;
+        }
+
+        /* Content Sections (like Engent's "OUR WORK" section) */
+        .content-section-wrapper {
+            background-color: var(--section-bg-dark); /* Dark background for these sections */
+            padding: 6rem 2rem; /* More vertical padding */
+            color: var(--text-white);
+            text-align: center;
+            border-bottom: 1px solid var(--border-color); /* Subtle separator */
+        }
+
+        .content-section-wrapper:last-of-type {
+            border-bottom: none;
+        }
+
+        .content-section-wrapper h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .content-section-wrapper h1::after { /* Underline effect for titles */
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 4px;
+            background-color: var(--primary-color);
+            left: 10%;
+            bottom: -10px;
+        }
+
+        .content-section-wrapper p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto 3rem auto; /* Center and add space below */
+        }
+
+        .content-section-wrapper button {
+            margin-top: 1rem;
+        }
+
+        /* Specific section styling (Engent-like) */
+
+        /* About Us Section (similar to Engent's 'Who We Are') */
+        .about-us-section {
+            background-image: url('acceuil2.png?v=4'); /* Example background image */
+        }
+        .about-us-section .section-overlay {
+            background-color: rgba(0, 0, 0, 0.75); /* Slightly darker overlay */
+        }
+        .about-content {
+            display: flex;
+            flex-direction: row; /* Default for larger screens */
+            align-items: center;
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .about-left {
+            flex: 1;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: left;
+        }
+        .about-right {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .about-right p {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            line-height: 1.7;
+            text-align: left; /* Align text to left */
+            margin: 0; /* Reset margin from .content-section-wrapper p */
+        }
+        .about-right button {
+            align-self: flex-start; /* Align button to left */
+        }
+
+        /* Our Team Section (Engent's 'Team') */
+        .our-team-section {
+            background-image: url('acceuil4.png?v=2'); /* Another example background */
+        }
+        .our-team-section .section-overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive grid */
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+            justify-items: center;
+        }
+        .team-member {
+            background: rgba(255, 255, 255, 0.07); /* Slightly transparent background */
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            text-align: center;
+            width: 100%; /* Ensure it fits grid cell */
+        }
+        .team-member:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .team-member img {
+            width: 120px;
+            height: 140px;
+            border-radius: 30%; /* Circular images */
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid var(--primary-color); /* Primary color border */
+        }
+        .team-member h3 {
+            color: var(--text-white);
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 0.5rem;
+        }
+        .team-member p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin: 0; /* Reset margin */
+        }
+
+        /* Services Section (Engent's 'Areas of Practice') */
+        .services-section {
+            background-image: url('acceuil4.png?v=2'); /* Another example background */
+        }
+        .services-section .section-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+        }
+        .service-item {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 2.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            text-align: left; /* Text alignment */
+            border-left: 5px solid var(--primary-color); /* Left border accent */
+        }
+        .service-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .service-item h3 {
+            color: var(--primary-color);
+            font-size: clamp(1.3rem, 3vw, 1.7rem);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .service-item p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Projects Section (Engent's 'Our Work') */
+        .projects-section {
+            background-image: url('acceuil5.png?v=2'); /* Another example background */
+        }
+        .projects-section .section-overlay {
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 3rem auto;
+        }
+        .project-item {
+            background-color: #222; /* Darker background for project items */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        .project-item img {
+            width: 100%;
+            height: 220px; /* Consistent height for images */
+            object-fit: cover;
+            display: block;
+        }
+        .project-info {
+            padding: 1.5rem;
+            text-align: left;
+        }
+        .project-info h3 {
+            color: var(--primary-color);
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            margin-bottom: 0.5rem;
+        }
+        .project-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+
+        /* Why Clients Trust Us Section (similar to Engent's 'Client Testimonials' or 'Why Choose Us') */
+        .why-trust-us-section {
+            background-image: url('acceuil8.png?v=3'); /* Example background */
+        }
+        .why-trust-us-section .section-overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .why-trust-us-section p {
+            max-width: 800px; /* Shorter paragraph for emphasis */
+            margin-bottom: 3rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-image: url('acceuil8.png?v=3'); /* Same background as 'Why Trust Us' */
+        }
+        .contact-section .section-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+        }
+        .contact-item {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color); /* Bottom border accent */
+        }
+        .contact-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .contact-item h3 {
+            color: var(--text-white);
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            margin-bottom: 0.5rem;
+        }
+        .contact-item p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0a0a0a; /* Very dark footer */
+            padding: 3rem;
+            display: flex;
+            flex-direction: column; /* Stack vertically on all screens */
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer .logo {
+            font-size: clamp(2rem, 4vw, 3rem); /* Larger footer logo */
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem; /* More space */
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(212, 241, 247, 0.7); /* Lighter default color */
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .social-icons a {
+            color: var(--text-white);
+            font-size: 1.8rem;
+            transition: var(--transition);
+        }
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Animations */
+        .hidden {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 1024px) {
+            header {
+                padding: 1rem 2rem;
+            }
+            .nav-links {
+                gap: 1rem;
+            }
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .about-left {
+                font-size: clamp(2.5rem, 6vw, 4.5rem);
+                text-align: center;
+            }
+            .about-right {
+                align-items: center;
+            }
+            .about-right p {
+                text-align: center;
+            }
+            .about-right button {
+                align-self: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem;
+            }
+            .nav-links button {
+                width: 100%; /* Full width button on small screens */
+            }
+            .hero-title {
+                font-size: clamp(2.5rem, 10vw, 4rem);
+            }
+            .hero-subtitle {
+                font-size: clamp(1.2rem, 5vw, 2rem);
+            }
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .hero-buttons button {
+                width: 80%;
+                margin: 0 auto;
+            }
+            .content-section-wrapper {
+                padding: 4rem 1.5rem;
+            }
+            .content-section-wrapper h1 {
+                font-size: clamp(2rem, 8vw, 3.5rem);
+            }
+            .content-section-wrapper p {
+                font-size: clamp(0.9rem, 3vw, 1.1rem);
+            }
+            .team-grid, .services-grid, .projects-grid, .contact-info-grid {
+                grid-template-columns: 1fr; /* Single column layout */
+            }
+            .service-item, .project-item, .team-member, .contact-item {
+                padding: 1.5rem;
+            }
+            .service-item h3, .project-info h3, .contact-item h3 {
+                font-size: clamp(1.1rem, 4vw, 1.3rem);
+            }
+            .service-item p, .project-info p, .contact-item p {
+                font-size: clamp(0.85rem, 3vw, 1rem);
+            }
+            footer {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">GC Trad</div>
+        <nav class="nav-links">
+            <a href="acceuil.php" data-key="navHome">Home</a>
+            <div class="dropdown">
+                <a href="#entreprise" data-key="navCompany">Entreprise ▼</a>
+                <div class="dropdown-content">
+                    <a href="aboutus.php" data-key="navAboutUs">About us</a>
+                    <a href="whyus.php" data-key="navWhyUs">Why us</a>
+                    <a href="team.php" data-key="navOurTeam">Our team</a>
+                    <a href="client.php" data-key="navClients">Clients</a>
+                    <a href="career.php" data-key="navCareer">Career</a>
+                </div>
+            </div>
+            <a href="contact.php" data-key="navContact">Contact</a>
+            <a href="faq.php" data-key="navFAQ">FAQ</a>
+            <button onclick="location.href='contact.php'" data-key="btnContactUs">Contact Us</button>
+            <i class="fas fa-globe lang-toggle" id="langToggle" title="Toggle Language"></i>
+        </nav>
+    </header>
+
+    <section class="section hero-section" id="home">
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h1 class="hero-title" data-key="heroTitle">Welcome to GC Trad</h1>
+            <p class="hero-subtitle" data-key="heroSubtitle">Building the future with strength, precision, and trust.</p>
+            <div class="hero-buttons">
+                <button onclick="location.href='aboutus.php'" data-key="btnLearnMore">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about-us-section" id="about">
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <div class="about-content">
+                <div class="about-left hidden">
+                    <h1>GC Trad</h1>
+                </div>
+                <div class="about-right hidden">
+                    <p data-key="aboutText">Civil engineering company specialized in the design, management, and execution of construction projects. We offer tailored solutions for residential, commercial, and infrastructure developments, with a strong focus on quality, safety, and sustainability. Our mission is to deliver reliable, efficient, and innovative engineering services that meet the highest industry standards.</p>
+                    <button onclick="location.href='aboutus.php'" data-key="btnMoreDetails">More Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section our-team-section" id="team">
+        <div class="section-overlay"></div>
+        <div class="section-content content-section-wrapper">
+            <h1 class="hidden" data-key="teamTitle">Our Best Team</h1>
+            <p class="hidden" data-key="teamSubtitle">Meet the dedicated professionals who drive our success and deliver exceptional results on every project.</p>
+            <div class="team-grid">
+                <div class="team-member hidden">
+                    <img src="acceuil1.png" alt="Team Member 1">
+                    <h3>John Doe</h3>
+                    <p data-key="teamMember1Task">Lead Engineer</p>
+                </div>
+                <div class="team-member hidden">
+                    <img src="acceuil1.png" alt="Team Member 2">
+                    <h3>Jane Smith</h3>
+                    <p data-key="teamMember2Task">Project Manager</p>
+                </div>
+                <div class="team-member hidden">
+                    <img src="acceuil1.png" alt="Team Member 3">
+                    <h3>Mike Johnson</h3>
+                    <p data-key="teamMember3Task">Site Supervisor</p>
+                </div>
+                </div>
+            <button onclick="location.href='team.php'" class="hidden" data-key="btnTeamMoreDetails">More Details</button>
+        </div>
+    </section>
+
+    <section class="section services-section" id="services">
+        <div class="section-overlay"></div>
+        <div class="section-content content-section-wrapper">
+            <h1 class="hidden" data-key="servicesTitle">Our Best Services</h1>
+            <p class="hidden" data-key="servicesSubtitle">At GC Trad, we provide a wide range of civil engineering services tailored to meet the needs of construction, infrastructure, and development projects.</p>
+            <div class="services-grid">
+                <div class="service-item hidden">
+                    <h3 data-key="service1Title">Structural Design</h3>
+                    <p data-key="service1Desc">Innovative and safe structural solutions for buildings and infrastructure.</p>
+                </div>
+                <div class="service-item hidden">
+                    <h3 data-key="service2Title">Project Management</h3>
+                    <p data-key="service2Desc">Comprehensive oversight from planning to completion, ensuring efficiency.</p>
+                </div>
+                <div class="service-item hidden">
+                    <h3 data-key="service3Title">Construction Consulting</h3>
+                    <p data-key="service3Desc">Expert advice and strategic planning for complex construction challenges.</p>
+                </div>
+            </div>
+            <button onclick="location.href='whyus.php'" class="hidden" data-key="btnServicesSeeMore">See More</button>
+        </div>
+    </section>
+
+    <section class="section projects-section" id="projects">
+        <div class="section-overlay"></div>
+        <div class="section-content content-section-wrapper">
+            <h1 class="hidden" data-key="projectsTitle">Latest Projects</h1>
+            <p class="hidden" data-key="projectsSubtitle">Discover our most impactful projects, showcasing our expertise. From infrastructure development to structural design.</p>
+            <div class="projects-grid">
+                <div class="project-item hidden">
+                    <img src="acceuil1.png" alt="Project 1">
+                    <div class="project-info">
+                        <h3 data-key="project1Title">Urban Revitalization</h3>
+                        <p data-key="project1Desc">A multi-phase project enhancing public spaces and urban connectivity.</p>
+                    </div>
+                </div>
+                <div class="project-item hidden">
+                    <img src="acceuil1.png" alt="Project 2">
+                    <div class="project-info">
+                        <h3 data-key="project2Title">Commercial Complex</h3>
+                        <p data-key="project2Desc">Designed and built a state-of-the-art commercial hub with sustainable features.</p>
+                    </div>
+                </div>
+                <div class="project-item hidden">
+                    <img src="acceuil1.png" alt="Project 3">
+                    <div class="project-info">
+                        <h3 data-key="project3Title">Bridge Construction</h3>
+                        <p data-key="project3Desc">Innovative bridge design improving regional transportation links.</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="location.href='career.php'" class="hidden" data-key="btnProjectsReadMore">View All Projects</button>
+        </div>
+    </section>
+
+    <section class="section why-trust-us-section" id="clients">
+        <div class="section-overlay"></div>
+        <div class="section-content content-section-wrapper">
+            <h1 class="hidden" data-key="whyTrustUsTitle">Why Clients Trust Us</h1>
+            <p class="hidden" data-key="whyTrustUsSubtitle">We build strong, lasting relationships based on reliability and excellence. Our clients trust us to deliver innovative solutions that meet their needs on time and within budget.</p>
+            <button onclick="location.href='client.php'" class="hidden" data-key="btnOurClients">Our Clients</button>
+        </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+        <div class="section-overlay"></div>
+        <div class="section-content content-section-wrapper">
+            <h1 class="hidden" data-key="contactInfoTitle">Contact Information</h1>
+            <div class="contact-info-grid">
+                <div class="contact-item hidden">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3 data-key="contactPhoneTitle">Phone</h3>
+                    <p>(+212) 6 61 29 53 04</p>
+                </div>
+                <div class="contact-item hidden">
+                    <i class="fas fa-envelope"></i>
+                    <h3 data-key="contactEmailTitle">Email</h3>
+                    <p>contact@gctrad.ma</p>
+                </div>
+                <div class="contact-item hidden">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3 data-key="contactLocationTitle">Location</h3>
+                    <p>336, Mag N°1 lot Dakhla Sidi Said. Meknes</p>
+                </div>
+            </div>
+            <button onclick="location.href='contact.php'" class="hidden" data-key="btnGetInTouch">Get In Touch</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo">GC Trad</div>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+        <ul class="footer-links">
+            <li><a href="team.php" data-key="footerTeam">Team</a></li>
+            <li><a href="aboutus.php" data-key="footerAbout">About</a></li>
+            <li><a href="career.php" data-key="footerCareer">Career</a></li>
+            <li><a href="contact.php" data-key="footerContact">Contact</a></li>
+            <li><a href="faq.php" data-key="footerFAQ">FAQ</a></li>
+        </ul>
+        <p class="footer-copyright" data-key="footerCopyright">&copy; 2025 GC Trad. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Language data
+        const translations = {
+            en: {
+                // Navigation
+                navHome: "Home",
+                navCompany: "Company ▼",
+                navAboutUs: "About us",
+                navWhyUs: "Why us",
+                navOurTeam: "Our team",
+                navClients: "Clients",
+                navCareer: "Career",
+                navContact: "Contact",
+                navFAQ: "FAQ",
+                btnContactUs: "Contact Us",
+
+                // Hero Section
+                heroTitle: "Welcome to GC Trad",
+                heroSubtitle: "Building the future with strength, precision, and trust.",
+                btnGetQuote: "Get a Quote",
+                btnLearnMore: "Learn More",
+
+                // About Us Section
+                aboutText: "Civil engineering company specialized in the design, management, and execution of construction projects. We offer tailored solutions for residential, commercial, and infrastructure developments, with a strong focus on quality, safety, and sustainability. Our mission is to deliver reliable, efficient, and innovative engineering services that meet the highest industry standards.",
+                btnMoreDetails: "More Details",
+
+                // Our Team Section
+                teamTitle: "Our Best Team",
+                teamSubtitle: "Meet the dedicated professionals who drive our success and deliver exceptional results on every project.",
+                teamMember1Task: "Lead Engineer",
+                teamMember2Task: "Project Manager",
+                teamMember3Task: "Site Supervisor",
+                btnTeamMoreDetails: "More Details",
+
+                // Services Section
+                servicesTitle: "Our Best Services",
+                servicesSubtitle: "At GC Trad, we provide a wide range of civil engineering services tailored to meet the needs of construction, infrastructure, and development projects.",
+                service1Title: "Structural Design",
+                service1Desc: "Innovative and safe structural solutions for buildings and infrastructure.",
+                service2Title: "Project Management",
+                service2Desc: "Comprehensive oversight from planning to completion, ensuring efficiency.",
+                service3Title: "Construction Consulting",
+                service3Desc: "Expert advice and strategic planning for complex construction challenges.",
+                service4Title: "Infrastructure Development",
+                service4Desc: "Designing and building essential public and private infrastructure.",
+                btnServicesSeeMore: "See More",
+
+                // Projects Section
+                projectsTitle: "Latest Projects",
+                projectsSubtitle: "Discover our most impactful projects, showcasing our expertise. From infrastructure development to structural design.",
+                project1Title: "Urban Revitalization",
+                project1Desc: "A multi-phase project enhancing public spaces and urban connectivity.",
+                project2Title: "Commercial Complex",
+                project2Desc: "Designed and built a state-of-the-art commercial hub with sustainable features.",
+                project3Title: "Bridge Construction",
+                project3Desc: "Innovative bridge design improving regional transportation links.",
+                project4Title: "Residential Towers",
+                project4Desc: "Modern residential buildings offering premium living spaces.",
+                btnProjectsReadMore: "View All Projects",
+
+                // Why Clients Trust Us Section
+                whyTrustUsTitle: "Why Clients Trust Us",
+                whyTrustUsSubtitle: "We build strong, lasting relationships based on reliability and excellence. Our clients trust us to deliver innovative solutions that meet their needs on time and within budget.",
+                btnOurClients: "Our Clients",
+
+                // Contact Section
+                contactInfoTitle: "Contact Information",
+                contactPhoneTitle: "Phone",
+                contactEmailTitle: "Email",
+                contactFaxTitle: "Fax",
+                contactLocationTitle: "Location",
+                btnGetInTouch: "Get In Touch",
+
+                // Footer
+                footerTeam: "Team",
+                footerAbout: "About",
+                footerCareer: "Career",
+                footerContact: "Contact",
+                footerFAQ: "FAQ",
+                footerCopyright: "&copy; 2025 GC Trad. All rights reserved."
+            },
+            fr: {
+                // Navigation
+                navHome: "Accueil",
+                navCompany: "Entreprise ▼",
+                navAboutUs: "À propos",
+                navWhyUs: "Pourquoi nous",
+                navOurTeam: "Notre équipe",
+                navClients: "Clients",
+                navCareer: "Carrières",
+                navContact: "Contact",
+                navFAQ: "FAQ",
+                btnContactUs: "Contactez-nous",
+
+                // Hero Section
+                heroTitle: "Bienvenue chez GC Trad",
+                heroSubtitle: "Construire l'avenir avec force, précision et confiance.",
+                btnGetQuote: "Demander un devis",
+                btnLearnMore: "En savoir plus",
+
+                // About Us Section
+                aboutText: "GC Trad est une entreprise de génie civil spécialisée dans la conception, la gestion et l'exécution de projets de construction. Nous offrons des solutions sur mesure pour les développements résidentiels, commerciaux et d'infrastructures, avec un accent fort sur la qualité, la sécurité et la durabilité. Notre mission est de fournir des services d'ingénierie fiables, efficaces et innovants qui répondent aux normes les plus élevées de l'industrie.",
+                btnMoreDetails: "Plus de détails",
+
+                // Our Team Section
+                teamTitle: "Notre meilleure équipe",
+                teamSubtitle: "Rencontrez les professionnels dévoués qui mènent notre succès et livrent des résultats exceptionnels sur chaque projet.",
+                teamMember1Task: "Ingénieur principal",
+                teamMember2Task: "Chef de projet",
+                teamMember3Task: "Superviseur de site",
+                btnTeamMoreDetails: "Plus de détails",
+
+                // Services Section
+                servicesTitle: "Nos meilleurs services",
+                servicesSubtitle: "Chez GC Trad, nous offrons une large gamme de services d'ingénierie civile adaptés aux besoins des projets de construction, d'infrastructure et de développement.",
+                service1Title: "Conception structurelle",
+                service1Desc: "Solutions structurelles innovantes et sûres pour les bâtiments et les infrastructures.",
+                service2Title: "Gestion de projet",
+                service2Desc: "Supervision complète de la planification à l'achèvement, garantissant l'efficacité.",
+                service3Title: "Conseil en construction",
+                service3Desc: "Conseils d'experts et planification stratégique pour les défis de construction complexes.",
+                service4Title: "Développement d'infrastructures",
+                service4Desc: "Conception et construction d'infrastructures publiques et privées essentielles.",
+                btnServicesSeeMore: "Voir plus",
+
+                // Projects Section
+                projectsTitle: "Derniers projets",
+                projectsSubtitle: "Découvrez nos projets les plus impactants, démontrant notre expertise. Du développement d'infrastructures à la conception structurelle.",
+                project1Title: "Revitalisation urbaine",
+                project1Desc: "Un projet en plusieurs phases améliorant les espaces publics et la connectivité urbaine.",
+                project2Title: "Complexe commercial",
+                project2Desc: "Conception et construction d'un pôle commercial de pointe avec des caractéristiques durables.",
+                project3Title: "Construction de ponts",
+                project3Desc: "Conception de ponts innovante améliorant les liaisons de transport régionales.",
+                project4Title: "Tours résidentielles",
+                project4Desc: "Bâtiments résidentiels modernes offrant des espaces de vie de qualité supérieure.",
+                btnProjectsReadMore: "Voir tous les projets",
+
+                // Why Clients Trust Us Section
+                whyTrustUsTitle: "Pourquoi les clients nous font confiance",
+                whyTrustUsSubtitle: "Nous bâtissons des relations solides et durables basées sur la fiabilité et l'excellence. Nos clients nous font confiance pour fournir des solutions innovantes qui répondent à leurs besoins à temps et dans les limites du budget.",
+                btnOurClients: "Nos clients",
+
+                // Contact Section
+                contactInfoTitle: "Informations de contact",
+                contactPhoneTitle: "Téléphone",
+                contactEmailTitle: "E-mail",
+                contactFaxTitle: "Fax",
+                contactLocationTitle: "Emplacement",
+                btnGetInTouch: "Nous contacter",
+
+                // Footer
+                footerTeam: "Équipe",
+                footerAbout: "À propos",
+                footerCareer: "Carrières",
+                footerContact: "Contact",
+                footerFAQ: "FAQ",
+                footerCopyright: "&copy; 2025 GC Trad. Tous droits réservés."
+            }
+        };
+
+        let currentLang = 'en'; // Default language
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang; // Set HTML lang attribute for accessibility
+
+            // Iterate over all elements with a data-key attribute
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    // Check if it's a button, then update value/text
+                    if (element.tagName === 'BUTTON' || element.type === 'submit') {
+                        element.textContent = translations[lang][key];
+                    } else if (element.tagName === 'A' && element.hasAttribute('title')) {
+                        // For icon titles
+                        element.title = translations[lang][key];
+                    }
+                    else {
+                        element.innerHTML = translations[lang][key]; // Use innerHTML for cases like &copy;
+                    }
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initial language setting
+            setLanguage(currentLang);
+
+            // Intersection Observer for fade-in animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 }); 
+
+            document.querySelectorAll('.hidden').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        const headerOffset = document.querySelector('header').offsetHeight;
+                        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                        const offsetPosition = elementPosition - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Language Toggle functionality
+            const langToggle = document.getElementById('langToggle');
+            if (langToggle) {
+                langToggle.addEventListener('click', () => {
+                    currentLang = (currentLang === 'en') ? 'fr' : 'en';
+                    setLanguage(currentLang);
+                });
+            }
+
+            // Ensure the main navigation dropdown works on hover
+            const dropdown = document.querySelector('.dropdown');
+            if (dropdown) {
+                dropdown.addEventListener('mouseenter', () => {
+                    document.querySelector('.dropdown-content').style.display = 'block';
+                    document.querySelector('.dropdown-content').style.opacity = '1';
+                    document.querySelector('.dropdown-content').style.transform = 'translateY(0)';
+                });
+                dropdown.addEventListener('mouseleave', () => {
+                    document.querySelector('.dropdown-content').style.display = 'none'; // Could also fade out for smoother transition
+                    document.querySelector('.dropdown-content').style.opacity = '0';
+                    document.querySelector('.dropdown-content').style.transform = 'translateY(10px)';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - GC Trad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* General Resets & Body */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(#737373, #b4b4b4); /* Light grey gradient background for overall page */
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+
+        /* Variables CSS for easier maintenance */
+        :root {
+            --primary-color: #ffb800; /* Yellow/Orange */
+            --secondary-color: #ff8800; /* Darker Orange */
+            --text-white: #ffffff;
+            --text-dark: #000000;
+            --bg-overlay: rgba(255, 136, 0, 0.93); /* Orange overlay for dropdown */
+            --transition: all 0.3s ease;
+            --dark-grey: #545454; /* For contact details background */
+            --black-bg: #111; /* For footer */
+            --accent-red: #c36477; /* For stat labels */
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-white);
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background-color: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        button {
+            padding: 0.8rem 1.8rem;
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.95);
+            min-width: 220px;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.5);
+            z-index: 1;
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            top: 100%;
+            left: 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            padding: 0.8rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            color: var(--text-white);
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--primary-color);
+        }
+
+        /* Language Toggle Icon */
+        .lang-toggle {
+            font-size: 1.5rem;
+            color: var(--text-white);
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: var(--transition);
+        }
+
+        .lang-toggle:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            header {
+                padding: 0.8rem 1rem;
+            }
+
+            .dropdown-content {
+                min-width: 150px;
+            }
+        }
+
+        /* Hero Section (adapted for contact) */
+        .hero-section {
+            /* Replace 'contact_bg.jpg' with your desired background image for the contact page */
+            background: url('image_69dade.jpg') no-repeat center center/cover; /* Changed to your uploaded image */
+            height: 40vh; /* Adjust height as needed */
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-white);
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        .hero-overlay {
+            background: rgba(0, 0, 0, 0.6); /* Darker overlay for better text visibility */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-around;
+        }
+
+        .contact-form {
+            flex: 1 1 400px; /* Allows it to grow and shrink, with a base of 400px */
+            padding: 30px;
+            background-color: var(--text-white);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .contact-form h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+
+        .form-group textarea {
+            resize: vertical; /* Allow vertical resizing only */
+            min-height: 120px;
+        }
+
+        .submit-button {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .submit-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .contact-details {
+            flex: 1 1 300px; /* Allows it to grow and shrink, with a base of 300px */
+            padding: 30px;
+            background-color: var(--dark-grey);
+            color: var(--text-white);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .contact-details h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .contact-details p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .contact-details p strong {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .contact-details .fas {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--black-bg);
+            color: var(--text-white);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer .social-icons a {
+            color: var(--text-white);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+
+        footer .social-icons a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">GC Trad</div>
+        <nav class="nav-links">
+            <a href="acceuil.php" data-key="navHome">Home</a>
+            <div class="dropdown">
+                <a href="#entreprise" data-key="navCompany">Entreprise <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="aboutus.php" data-key="navAboutUs">About us</a>
+                    <a href="whyus.php" data-key="navWhyUs">Why us</a>
+                    <a href="team.php" data-key="navOurTeam">Our team</a>
+                    <a href="client.php" data-key="navClients">Clients</a>
+                    <a href="career.php" data-key="navCareer">Career</a>
+                </div>
+            </div>
+            <a href="contact.php" data-key="navContact">Contact</a>
+            <a href="faq.php" data-key="navFAQ">FAQ</a>
+            <button onclick="location.href='contact.php'" data-key="btnContactUs">Contact Us</button>
+            <i class="fas fa-globe lang-toggle" id="langToggle" title="Toggle Language"></i>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-overlay">
+            <h1 class="hero-title" data-key="heroContactTitle">Contact Us</h1>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="contact-form">
+            <h2 data-key="contactFormTitle">Send us a message</h2>
+            <form action="process_contact.php" method="post"> <div class="form-group">
+                    <label for="name" data-key="contactNameLabel">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" data-key="contactEmailLabel">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject" data-key="contactSubjectLabel">Subject</label>
+                    <input type="text" id="subject" name="subject">
+                </div>
+                <div class="form-group">
+                    <label for="message" data-key="contactMessageLabel">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-button" data-key="contactSubmitButton">Send Message</button>
+            </form>
+        </div>
+        <div class="contact-details">
+            <h2 data-key="contactDetailsTitle">Contact Information</h2>
+            <p>
+                <i class="fas fa-map-marker-alt"></i>
+                <strong data-key="contactAddressStrong">Address:</strong> <span data-key="contactAddressContent">336, Mag N°1 lot Dakhla Sidi Said. Meknes</span>
+            </p>
+            <p>
+                <i class="fas fa-phone"></i>
+                <strong data-key="contactPhoneStrong">Phone:</strong> <span data-key="contactPhoneContent">(+212) 6 61 29 53 04</span>
+            </p>
+            <p>
+                <i class="fas fa-envelope"></i>
+                <strong data-key="contactEmailStrong">Email:</strong> <span data-key="contactEmailContent">contact@gctrad.ma</span>
+            </p>
+            <p>
+                <strong data-key="contactBusinessHoursStrong">Business Hours:</strong> <span data-key="contactBusinessHoursContent">Monday - Friday, 9:00 AM - 5:00 PM</span>
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 GC Trad. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Language Translation Logic ---
+            const translations = {
+                'en': {
+                    // Navigation
+                    'navHome': 'Home',
+                    'navCompany': 'Company',
+                    'navAboutUs': 'About us',
+                    'navWhyUs': 'Why us',
+                    'navOurTeam': 'Our team',
+                    'navClients': 'Clients',
+                    'navCareer': 'Career',
+                    'navContact': 'Contact',
+                    'navFAQ': 'FAQ',
+                    'btnContactUs': 'Contact Us',
+                    // Contact Page Hero
+                    'heroContactTitle': 'Contact Us',
+                    // Contact Form
+                    'contactFormTitle': 'Send us a message',
+                    'contactNameLabel': 'Name',
+                    'contactEmailLabel': 'Email Address',
+                    'contactSubjectLabel': 'Subject',
+                    'contactMessageLabel': 'Message',
+                    'contactSubmitButton': 'Send Message',
+                    // Contact Details
+                    'contactDetailsTitle': 'Contact Information',
+                    'contactAddressStrong': 'Address:',
+                    'contactAddressContent': '336, Mag N°1 lot Dakhla Sidi Said. Meknes', // Updated English address
+                    'contactPhoneStrong': 'Phone:',
+                    'contactPhoneContent': '(+212) 6 61 29 53 04', // Updated English phone
+                    'contactEmailStrong': 'Email:',
+                    'contactEmailContent': 'contact@gctrad.ma', // Updated English email
+                    'contactBusinessHoursStrong': 'Business Hours:',
+                    'contactBusinessHoursContent': 'Monday - Friday, 9:00 AM - 5:00 PM'
+                },
+                'fr': {
+                    // Navigation
+                    'navHome': 'Accueil',
+                    'navCompany': 'Entreprise',
+                    'navAboutUs': 'À propos de nous',
+                    'navWhyUs': 'Pourquoi nous',
+                    'navOurTeam': 'Notre équipe',
+                    'navClients': 'Clients',
+                    'navCareer': 'Carrières',
+                    'navContact': 'Contact',
+                    'navFAQ': 'FAQ',
+                    'btnContactUs': 'Nous Contacter',
+                    // Contact Page Hero
+                    'heroContactTitle': 'Contactez-nous',
+                    // Contact Form
+                    'contactFormTitle': 'Envoyez-nous un message',
+                    'contactNameLabel': 'Nom',
+                    'contactEmailLabel': 'Adresse e-mail',
+                    'contactSubjectLabel': 'Sujet',
+                    'contactMessageLabel': 'Message',
+                    'contactSubmitButton': 'Envoyer le message',
+                    // Contact Details
+                    'contactDetailsTitle': 'Informations de contact',
+                    'contactAddressStrong': 'Adresse :',
+                    'contactAddressContent': '336, Mag N°1 lot Dakhla Sidi Said. Meknes', // Updated French address
+                    'contactPhoneStrong': 'Téléphone :',
+                    'contactPhoneContent': '(+212) 6 61 29 53 04', // Updated French phone
+                    'contactEmailStrong': 'E-mail :',
+                    'contactEmailContent': 'contact@gctrad.ma', // Updated French email
+                    'contactBusinessHoursStrong': 'Heures de bureau :',
+                    'contactBusinessHoursContent': 'Du lundi au vendredi, de 9h00 à 17h00'
+                }
+            };
+
+            let currentLanguage = 'fr'; // Default language
+
+            function updateContent() {
+                document.querySelectorAll('[data-key]').forEach(element => {
+                    const key = element.dataset.key;
+                    if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                        // Special handling for elements that might contain icons or other HTML (like dropdown link)
+                        if (element.tagName === 'A' && key === 'navCompany') {
+                            element.innerHTML = translations[currentLanguage][key] + ' <i class="fas fa-caret-down"></i>';
+                        } else if (element.tagName === 'BUTTON' || (element.tagName === 'INPUT' && element.type === 'submit')) {
+                            element.textContent = translations[currentLanguage][key];
+                        }
+                        else {
+                            element.textContent = translations[currentLanguage][key];
+                        }
+                    }
+                });
+
+                // Update the lang attribute of the HTML tag
+                document.documentElement.lang = currentLanguage;
+            }
+
+            // Event listener for the language toggle icon
+            const langToggle = document.getElementById('langToggle');
+            langToggle.addEventListener('click', function() {
+                currentLanguage = (currentLanguage === 'fr') ? 'en' : 'fr'; // Toggle language
+                updateContent(); // Update all text on the page
+            });
+
+            // Initial content load
+            updateContent();
+        });
+    </script>
+</body>
+</html>

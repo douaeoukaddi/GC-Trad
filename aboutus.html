@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About us - Engent-like</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* General Resets & Body */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(#737373, #b4b4b4); /* Light grey gradient background for overall page */
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+
+        /* Variables CSS for easier maintenance */
+        :root {
+            --primary-color: #ffb800; /* Yellow/Orange */
+            --secondary-color: #ff8800; /* Darker Orange */
+            --text-white: #ffffff;
+            --text-dark: #000000;
+            --bg-overlay: rgba(255, 136, 0, 0.93); /* Orange overlay for dropdown */
+            --transition: all 0.3s ease;
+            --dark-grey: #545454; /* For description box */
+            --black-bg: #111; /* For stats section */
+            --accent-red: #c36477; /* For stat labels */
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem; /* Increased padding */
+            background: rgba(0, 0, 0, 0.7); /* More opaque header */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: clamp(1.8rem, 4vw, 2.8rem); /* Larger logo */
+            color: var(--primary-color);
+            font-weight: 700; /* Bolder */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem; /* More space between links */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-white);
+            font-size: clamp(1rem, 1.5vw, 1.2rem); /* Slightly larger font */
+            transition: var(--transition);
+            padding: 0.5rem 0; /* Vertical padding only */
+            position: relative; /* For underline effect */
+        }
+
+        .nav-links a::after { /* Underline effect */
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background-color: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        button {
+            padding: 0.8rem 1.8rem; /* Larger button */
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 5px; /* Less rounded */
+            font-weight: 600; /* Bolder text */
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            text-transform: uppercase; /* Uppercase text */
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px); /* Slight lift */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.95); /* Darker dropdown background */
+            min-width: 220px; /* Wider dropdown */
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.5); /* Stronger shadow */
+            z-index: 1;
+            border-radius: 8px;
+            padding: 0.5rem 0; /* Reduced padding */
+            top: 100%;
+            left: 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            padding: 0.8rem 1.5rem; /* More padding for items */
+            border-bottom: 1px solid rgba(255,255,255,0.08); /* Lighter separator */
+            color: var(--text-white);
+            font-size: 1rem; /* Fixed size */
+            white-space: nowrap;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.08); /* Subtle hover background */
+            color: var(--primary-color);
+        }
+
+        /* Language Toggle Icon */
+        .lang-toggle {
+            font-size: 1.5rem; /* Icon size */
+            color: var(--text-white);
+            cursor: pointer;
+            margin-left: 1rem; /* Space from button */
+            transition: var(--transition);
+        }
+
+        .lang-toggle:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        /* Hero Section (Top Banner) */
+        .hero-section {
+            background: url('acceuil2.png') no-repeat center center/cover; /* Using the uploaded image */
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Pushes overlay to top, description-box to bottom */
+        }
+
+        .hero-overlay {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.2)); /* Darker overlay for text readability */
+            flex-grow: 1; /* Makes overlay take remaining space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-white);
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+            font-weight: 400;
+            margin-top: 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .scroll-button {
+            background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+            border: 2px solid var(--text-white);
+            color: var(--text-white);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 2rem; /* Position at the bottom of the hero section */
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite; /* Animation for bounce effect */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+            cursor: pointer; /* Ensure cursor indicates it's clickable */
+        }
+
+        .scroll-button:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--text-dark);
+            animation: none; /* Stop bounce on hover */
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-15px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-7px);
+            }
+        }
+
+        /* Description Box (About Us Text) */
+        .description-box {
+            background-color: var(--dark-grey); /* Dark grey background */
+            color: var(--text-white);
+            padding: 3rem; /* More padding */
+            text-align: left;
+            max-width: 100%; /* Ensure it spans full width of parent */
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3); /* Shadow to separate from hero */
+        }
+
+        .description-box h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary-color); /* Underline effect */
+            padding-bottom: 0.5rem;
+            display: inline-block; /* Make underline only as wide as text */
+        }
+
+        .description-box p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            line-height: 1.8;
+            max-width: 800px; /* Limit line length for readability */
+            margin: 0 auto; /* Center paragraph if max-width is applied */
+        }
+
+        /* Statistics Section */
+        .stats-section {
+            background-color: var(--black-bg); /* Dark background */
+            color: var(--text-white);
+            text-align: center;
+            padding: 5rem 2rem; /* More padding top/bottom */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .stats-section h1 {
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            margin-bottom: 4rem; /* More space below title */
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--primary-color);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 3rem;
+            max-width: 1200px; /* Wider grid */
+            margin: 0 auto;
+            justify-items: center;
+            align-items: start; /* Align items to the top of their cells */
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-white);
+            width: 100%;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05); /* Slightly visible background for items */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+
+        .stat-label {
+            color: var(--accent-red); /* Reddish accent color */
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem; /* More space */
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .separator {
+            width: 80px; /* Fixed width for separator */
+            height: 3px; /* Thicker separator */
+            background-color: var(--primary-color); /* Orange separator */
+            margin-bottom: 1.5rem; /* More space */
+            border-radius: 2px;
+        }
+
+        .stat-value {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--text-white); /* Ensure value is white */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .history{
+            display:flex;
+            margin-top:10vh;
+            color:white;
+            align-items: center; /* pour aligner l'image et le texte verticalement */
+            gap: 3vw;
+            padding: 0 2rem; /* Add horizontal padding for better spacing on larger screens */
+        }
+        .history img{
+            flex: 1;
+            width: clamp(300px, 40vw, 600px);
+            height: auto;
+            border-radius: 5px;
+        }
+        .history1{
+            flex:1;
+            gap:5px;
+        }
+        .history1 h1{
+            text-transform: uppercase;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1rem;
+
+        }
+        .history1 p{
+            font-size:clamp(1rem,1.5vw,2rem);
+        }
+
+        .container {
+            display: flex;
+            gap: 50px;
+            max-width: 1200px;
+            margin-top: 10vh;
+            margin-left:10vw;
+        }
+
+        .main-content {
+            flex: 3;
+        }
+
+        .main-content h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 30px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .main-content p {
+            text-align: justify;
+            font-size: 15px;
+            line-height: 2;
+            margin-bottom: 25px;
+        }
+
+        .sidebar {
+            flex: 0.5;
+        }
+
+        .sidebar h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #ddd;
+            padding-bottom: 6px;
+            position: relative;
+        }
+        
+        /* Ensure sidebar links are styled correctly */
+        .sidebar a {
+            display: block;
+            color: #666; /* Adjust color as needed, was originally black/dark grey */
+            text-decoration: none;
+            font-size: 13px;
+            margin: 8px 0;
+            transition: color 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: var(--primary-color); /* Keep it consistent with other hover effects */
+        }
+
+        .Strengths{
+            display:flex;
+            margin-top:10vh;
+            color:white;
+            align-items: center; /* pour aligner l'image et le texte verticalement */
+            gap: 3vw;
+            padding: 0 2rem; /* Add horizontal padding for better spacing on larger screens */
+        }
+        .Strengths img{
+            flex: 1;
+            width: clamp(300px, 40vw, 600px);
+            height: auto;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #0a0a0a; /* Very dark footer */
+            padding: 3rem;
+            display: flex;
+            flex-direction: column; /* Stack vertically on all screens */
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer .logo {
+            font-size: clamp(2rem, 4vw, 3rem); /* Larger footer logo */
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem; /* More space */
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(212, 241, 247, 0.7); /* Lighter default color */
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .social-icons a {
+            color: var(--text-white);
+            font-size: 1.8rem;
+            transition: var(--transition);
+        }
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+        }
+
+
+        @media (max-width: 768px) {
+            .container, .history, .Strengths { /* Added .history and .Strengths here to also apply flex-direction: column */
+                flex-direction: column;
+                padding: 30px;
+                margin-left: 0; /* Remove left margin for small screens */
+            }
+
+            .history img, .Strengths img {
+                width: 100%; /* Make image fill width on small screens */
+            }
+        }
+
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            header {
+                padding: 0.8rem 1rem;
+            }
+
+            .dropdown-content {
+                min-width: 150px;
+            }
+
+            .description-box {
+                padding: 2rem 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr; /* Single column on smaller screens */
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">GC Trad</div>
+        <nav class="nav-links">
+            <a href="acceuil.php" data-key="navHome">Home</a>
+            <div class="dropdown">
+                <a href="#entreprise" data-key="navCompany">Entreprise ▼</a>
+                <div class="dropdown-content">
+                    <a href="aboutus.php" data-key="navAboutUs">About us</a>
+                    <a href="whyus.php" data-key="navWhyUs">Why us</a>
+                    <a href="team.php" data-key="navOurTeam">Our team</a>
+                    <a href="client.php" data-key="navClients">Clients</a>
+                    <a href="career.php" data-key="navCareer">Career</a>
+                </div>
+            </div>
+            <a href="contact.php" data-key="navContact">Contact</a>
+            <a href="faq.php" data-key="navFAQ">FAQ</a>
+            <button onclick="location.href='contact.php'" data-key="btnContactUs">Contact Us</button>
+            <i class="fas fa-globe lang-toggle" id="langToggle" title="Toggle Language"></i>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-overlay">
+            <h1 class="hero-title" data-key="heroTitle">About Us</h1>
+            <h2 class="hero-subtitle" data-key="heroSubtitle">Established in 1974</h2>
+            <button id="scrollButton" class="scroll-button">&#11167;</button>
+        </div>
+        <div class="description-box" id="about-section">
+            <h2 data-key="aboutSectionTitle">About</h2>
+            <p data-key="aboutSectionText">Exceeding Expectations. It defines how we approach our work. The Engineering Enterprise has been dedicated to exceeding our client’s expectations across thousands of diverse projects since 1974.</p>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <h1 data-key="statsTitle">THE ENGINEERING ENTERPRISE STATS</h1>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <p class="stat-label" data-key="statOffices">OFFICES</p>
+                <div class="separator"></div>
+                <p class="stat-value">6</p>
+            </div>
+            <div class="stat-item">
+                <p class="stat-label" data-key="statEmployees">EMPLOYEES</p>
+                <div class="separator"></div>
+                <p class="stat-value">51</p>
+            </div>
+            <div class="stat-item">
+                <p class="stat-label" data-key="statRepeatClientele">% OF WORK WITH REPEAT CLIENTELE</p>
+                <div class="separator"></div>
+                <p class="stat-value">95%</p>
+            </div>
+            <div class="stat-item">
+                <p class="stat-label" data-key="statEmployeeTenure">AVERAGE EMPLOYEE TENURE</p>
+                <div class="separator"></div>
+                <p class="stat-value">17 YRS</p>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="main-content">
+            <h1 data-key="mainContentAboutTitle">ABOUT GC Trad</h1>
+            <p data-key="mainContentAboutPara1"><strong>Exceeding Expectations.</strong> It defines how we approach our work and The Engineering Enterprise has been dedicated to exceeding our client’s expectations across thousands of diverse projects since 1974.</p>
+            <p data-key="mainContentAboutPara2">Our commitment to delivering on this promise has made us one of California’s leading electrical engineering and design firms. We’re well versed in both renovation and new construction ranging from small retail stores to large office campus facilities and much more. Our work spans a wide spectrum of projects including auditorium, civic, convention, data center, detention, educational, health care, hospitality, high-rise housing, industrial, laboratory, library, mixed-use, low rise and high-rise office buildings, parking garages, recreational, theatrical, retail and transportation facilities.</p>
+        </div>
+
+        <aside class="sidebar">
+            <h3 data-key="sidebarCategories"><span>CATEGORIES</span></h3>
+            <a href="#history-section" data-key="sidebarHistory">History</a>
+            <a href="whyus.php" data-key="sidebarWhyGCTrad">Why GC Trad</a>
+
+            <h3 data-key="sidebarOurPeople">OUR PEOPLE</h3>
+            <a href="team.php" data-key="sidebarPeople">People</a>
+        </aside>
+    </div>
+    <div class="history" id="history-section">
+        <img src="acceuil7.png?v=2" >
+        <div class="history1">
+            <h1 data-key="historyTitle">history</h1>
+            <p data-key="historyText">As we approach our 50-year anniversary, we understand the importance of our history. Our history has certainly guided and defined the company. We are constantly referring back to the ideals around which the company was founded, exceeding expectations!<br>The Engineering Enterprise began as a partnership between Charles Shalley and Dan Dibble in the spring of 1974. Both Chuck and Dan had extensive experience as electrical designers and, at the time, both were employed by the Oakland firm of Beamer/Wilkinson & Asso</p>
+        </div>
+        
+    </div>
+    <div class="Strengths">
+        <div class="history1">
+            <h1 data-key="strengthsTitle">Our Strengths</h1>
+            <p data-key="strengthsText">As we approach our 50-year anniversary, we understand the importance of our history. Our history has certainly guided and defined the company. We are constantly referring back to the ideals around which the company was founded, exceeding expectations!<br>The Engineering Enterprise began as a partnership between Charles Shalley and Dan Dibble in the spring of 1974. Both Chuck and Dan had extensive experience as electrical designers and, at the time, both were employed by the Oakland firm of Beamer/Wilkinson & Asso</p>
+        </div>
+        <img src="acceuil9.png" >
+        
+    </div>
+
+    <footer>
+        <div class="logo">GC Trad</div>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+        <ul class="footer-links">
+            <li><a href="team.php" data-key="footerTeam">Team</a></li>
+            <li><a href="aboutus.php" data-key="footerAbout">About</a></li>
+            <li><a href="career.php" data-key="footerCareer">Career</a></li>
+            <li><a href="contact.php" data-key="footerContact">Contact</a></li>
+            <li><a href="faq.php" data-key="footerFAQ">FAQ</a></li>
+        </ul>
+        <p class="footer-copyright" data-key="footerCopyright">&copy; 2025 GC Trad. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Language content
+        const translations = {
+            en: {
+                navHome: "Home",
+                navCompany: "Entreprise ▼",
+                navAboutUs: "About us",
+                navWhyUs: "Why us",
+                navOurTeam: "Our team",
+                navClients: "Clients",
+                navCareer: "Career",
+                navContact: "Contact",
+                navFAQ: "FAQ",
+                btnContactUs: "Contact Us",
+                heroTitle: "About Us",
+                heroSubtitle: "Established in 1974",
+                aboutSectionTitle: "About",
+                aboutSectionText: "Exceeding Expectations. It defines how we approach our work. The Engineering Enterprise has been dedicated to exceeding our client’s expectations across thousands of diverse projects since 1974.",
+                statsTitle: "THE ENGINEERING ENTERPRISE STATS",
+                statOffices: "OFFICES",
+                statEmployees: "EMPLOYEES",
+                statRepeatClientele: "% OF WORK WITH REPEAT CLIENTELE",
+                statEmployeeTenure: "AVERAGE EMPLOYEE TENURE",
+                mainContentAboutTitle: "ABOUT GC Trad",
+                mainContentAboutPara1: "<strong>Exceeding Expectations.</strong> It defines how we approach our work and The Engineering Enterprise has been dedicated to exceeding our client’s expectations across thousands of diverse projects since 1974.",
+                mainContentAboutPara2: "Our commitment to delivering on this promise has made us one of California’s leading electrical engineering and design firms. We’re well versed in both renovation and new construction ranging from small retail stores to large office campus facilities and much more. Our work spans a wide spectrum of projects including auditorium, civic, convention, data center, detention, educational, health care, hospitality, high-rise housing, industrial, laboratory, library, mixed-use, low rise and high-rise office buildings, parking garages, recreational, theatrical, retail and transportation facilities.",
+                sidebarCategories: "CATEGORIES",
+                sidebarHistory: "History",
+                sidebarWhyGCTrad: "Why GC Trad",
+                sidebarOurPeople: "OUR PEOPLE",
+                sidebarPeople: "People",
+                historyTitle: "history",
+                historyText: "As we approach our 50-year anniversary, we understand the importance of our history. Our history has certainly guided and defined the company. We are constantly referring back to the ideals around which the company was founded, exceeding expectations!<br>The Engineering Enterprise began as a partnership between Charles Shalley and Dan Dibble in the spring of 1974. Both Chuck and Dan had extensive experience as electrical designers and, at the time, both were employed by the Oakland firm of Beamer/Wilkinson & Asso",
+                strengthsTitle: "Our Strengths",
+                strengthsText: "As we approach our 50-year anniversary, we understand the importance of our history. Our history has certainly guided and defined the company. We are constantly referring back to the ideals around which the company was founded, exceeding expectations!<br>The Engineering Enterprise began as a partnership between Charles Shalley and Dan Dibble in the spring of 1974. Both Chuck and Dan had extensive experience as electrical designers and, at the time, both were employed by the Oakland firm of Beamer/Wilkinson & Asso",
+                footerTeam: "Team",
+                footerAbout: "About",
+                footerCareer: "Career",
+                footerContact: "Contact",
+                footerFAQ: "FAQ",
+                footerCopyright: "&copy; 2025 GC Trad. All rights reserved."
+            },
+            fr: {
+                navHome: "Accueil",
+                navCompany: "Entreprise ▼",
+                navAboutUs: "À propos",
+                navWhyUs: "Pourquoi nous",
+                navOurTeam: "Notre équipe",
+                navClients: "Clients",
+                navCareer: "Carrières",
+                navContact: "Contact",
+                navFAQ: "FAQ",
+                btnContactUs: "Contactez-nous",
+                heroTitle: "À Propos de Nous",
+                heroSubtitle: "Fondée en 1974",
+                aboutSectionTitle: "À Propos",
+                aboutSectionText: "Dépasser les attentes. Cela définit notre approche de travail. The Engineering Enterprise s'est engagée à dépasser les attentes de ses clients à travers des milliers de projets divers depuis 1974.",
+                statsTitle: "STATISTIQUES DE THE ENGINEERING ENTERPRISE",
+                statOffices: "BUREAUX",
+                statEmployees: "EMPLOYÉS",
+                statRepeatClientele: "% DE TRAVAIL AVEC CLIENTÈLE FIDÈLE",
+                statEmployeeTenure: "ANCIENNETÉ MOYENNE DES EMPLOYÉS",
+                mainContentAboutTitle: "À PROPOS DE GC Trad",
+                mainContentAboutPara1: "<strong>Dépasser les attentes.</strong> Cela définit notre approche de travail et The Engineering Enterprise s'est engagée à dépasser les attentes de ses clients à travers des milliers de projets divers depuis 1974.",
+                mainContentAboutPara2: "Notre engagement à tenir cette promesse a fait de nous l'une des principales entreprises d'ingénierie électrique et de conception de Californie. Nous maîtrisons aussi bien la rénovation que les nouvelles constructions, allant des petits magasins de détail aux grands campus de bureaux et bien plus encore. Notre travail couvre un large éventail de projets, y compris les auditoriums, les installations civiques, les centres de congrès, les centres de données, les centres de détention, les établissements éducatifs, les soins de santé, l'hôtellerie, les immeubles résidentiels de grande hauteur, les industries, les laboratoires, les bibliothèques, les usages mixtes, les immeubles de bureaux de faible et grande hauteur, les parkings, les installations récréatives, théâtrales, commerciales et de transport.",
+                sidebarCategories: "CATÉGORIES",
+                sidebarHistory: "Historique",
+                sidebarWhyGCTrad: "Pourquoi GC Trad",
+                sidebarOurPeople: "NOS GENS",
+                sidebarPeople: "Personnes",
+                historyTitle: "Historique",
+                historyText: "Alors que nous approchons de notre 50e anniversaire, nous comprenons l'importance de notre histoire. Notre histoire a certainement guidé et défini l'entreprise. Nous nous référons constamment aux idéaux sur lesquels l'entreprise a été fondée : dépasser les attentes !<br>The Engineering Enterprise a commencé comme un partenariat entre Charles Shalley et Dan Dibble au printemps 1974. Chuck et Dan avaient tous deux une vaste expérience en tant que concepteurs électriques et, à l'époque, ils étaient tous deux employés par le cabinet d'Oakland Beamer/Wilkinson & Asso",
+                strengthsTitle: "Nos Forces",
+                strengthsText: "Alors que nous approchons de notre 50e anniversaire, nous comprenons l'importance de notre histoire. Notre histoire a certainement guidé et défini l'entreprise. Nous nous référons constamment aux idéaux sur lesquels l'entreprise a été fondée : dépasser les attentes !<br>The Engineering Enterprise a commencé comme un partenariat entre Charles Shalley et Dan Dibble au printemps 1974. Chuck et Dan avaient tous deux une vaste expérience en tant que concepteurs électriques et, à l'époque, ils étaient tous deux employés par le cabinet d'Oakland Beamer/Wilkinson & Asso",
+                footerTeam: "Équipe",
+                footerAbout: "À Propos",
+                footerCareer: "Carrières",
+                footerContact: "Contact",
+                footerFAQ: "FAQ",
+                footerCopyright: "&copy; 2025 GC Trad. Tous droits réservés."
+            }
+        };
+
+        let currentLang = 'en'; // Default language
+
+        function setLanguage(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    // Check if the element is an input or button to set value/placeholder, otherwise set innerHTML
+                    if (element.tagName === 'INPUT' || element.tagName === 'BUTTON') {
+                        if (element.hasAttribute('data-placeholder')) {
+                            element.setAttribute('placeholder', translations[lang][key]);
+                        } else {
+                            element.innerHTML = translations[lang][key];
+                        }
+                    } else {
+                        element.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+            // Update the document title as well
+            document.title = translations[lang].navAboutUs + " - GC Trad"; // Assuming navAboutUs corresponds to the page title
+        }
+
+        // Dynamic Counter Animation
+        const statsSection = document.querySelector('.stats-section');
+        const counters = document.querySelectorAll('.stat-value');
+        let countersAnimated = false; // Flag to ensure animation runs only once
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.innerText.replace(/\D/g, ''); // Remove non-digits
+                const isPercent = counter.innerText.includes('%');
+                const isYrs = counter.innerText.includes('YRS');
+
+                const duration = 1500; // 1.5 seconds
+                const increment = target / (duration / 20); // Calculate increment for ~20ms interval
+
+                let count = 0;
+                const timer = setInterval(() => {
+                    count += increment;
+                    if (count >= target) {
+                        count = target;
+                        clearInterval(timer);
+                    }
+
+                    counter.innerText = isPercent
+                        ? `${Math.round(count)}%`
+                        : isYrs
+                        ? `${Math.round(count)} YRS`
+                        : Math.round(count);
+                }, 20); // Update every 20ms
+            });
+        };
+
+        // Intersection Observer for Counter Animation
+        const statsObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !countersAnimated) {
+                    animateCounters();
+                    countersAnimated = true; // Set flag to true after animation
+                }
+            });
+        }, {
+            threshold: 0.5 // Trigger when 50% of the stats section is visible
+        });
+
+        // Ensure statsSection exists before observing
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Smooth Scroll Button
+        const scrollButton = document.getElementById('scrollButton');
+        const aboutSection = document.getElementById('about-section');
+
+        if (scrollButton && aboutSection) {
+            scrollButton.addEventListener('click', function() {
+                aboutSection.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Language Toggle functionality
+        const langToggle = document.getElementById('langToggle');
+        if (langToggle) {
+            langToggle.addEventListener('click', () => {
+                currentLang = (currentLang === 'en') ? 'fr' : 'en';
+                setLanguage(currentLang);
+            });
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(currentLang);
+        });
+    </script>
+</body>
+</html>
