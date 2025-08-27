@@ -1,7 +1,6 @@
 <?php
 $donnee = new PDO("sqlite:career.db");
 
-// Enable error reporting for PDO
 $donnee->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $donnee->exec("
@@ -15,11 +14,8 @@ $donnee->exec("
     )
 ");
 
-// --- START: Code to add missing columns (Run once, then remove or comment out) ---
-// IMPORTANT: Make sure you've either deleted career.db or run this section once.
-// After successful execution and verification, you can comment out or remove this block.
+
 try {
-    // Check if 'date_de_creature' column exists and add if not
     $donnee->exec("ALTER TABLE projects ADD COLUMN date_de_creature DATETIME");
 } catch (PDOException $e) {
     if (strpos($e->getMessage(), 'duplicate column name: date_de_creature') === false) {
@@ -28,30 +24,25 @@ try {
 }
 
 try {
-    // Check if 'category' column exists and add if not
     $donnee->exec("ALTER TABLE projects ADD COLUMN category TEXT");
 } catch (PDOException $e) {
     if (strpos($e->getMessage(), 'duplicate column name: category') === false) {
         throw $e;
     }
 }
-// --- END: Code to add missing columns ---
 
 
-// Insert some dummy data if the table is empty (for demonstration)
-// You can remove this block once you have real data.
-// Ensure your image files (project1.jpg, project2.jpg, etc.) exist in an 'images' folder.
+
 $count = $donnee->query("SELECT COUNT(*) FROM projects")->fetchColumn();
 if ($count == 0) {
     $donnee->exec("INSERT INTO projects (nom, date_de_creature, description, image, category) VALUES
-        ('UC Merced Social Sciences and Management Building', '2023-01-15 10:00:00', 'Architectural lighting design for a modern academic facility.', 'project1.jpg', 'Higher Ed'),
-        ('Lathrop Police Department', '2022-11-20 09:30:00', 'Security and low voltage systems for a new police station.', 'project2.jpg', 'Civic'),
-        ('UC Davis Engineering Student Design Center', '2023-03-01 14:00:00', 'Innovative engineering solutions for student workshops and labs.', 'project3.jpg', 'Higher Ed'),
-        ('Placer County Health & Human Services Building', '2023-05-10 11:00:00', 'Comprehensive electrical design for a large county facility.', 'project4.jpg', 'Health Care'),
-        ('Monterey Regional Airport - Aircraft', '2022-09-05 08:45:00', 'Airfield lighting and power distribution systems.', 'project5.jpg', 'Parking & Transportation'),
-        ('Fresno City Hall', '2023-07-22 16:00:00', 'Renovation of electrical systems for a historic city hall.', 'project6.jpg', 'Civic'),
-        ('Sacramento Convention Center Expansion', '2023-02-28 13:00:00', 'Electrical infrastructure for large-scale convention center expansion.', 'project7.jpg', 'Commercial & Office'),
-        ('Inderkum High School Public Safety', '2023-04-03 10:15:00', 'Safety and security systems for a public high school.', 'project8.jpg', 'K-12')
+        ('Morgue Renovation Project – Tetouan Provincial Hospital', '2024-04-18', 'A multi-phase project improving safety, hygiene, and compliance.', 'projet1.jpg', 'Healthcare'),
+        ('Roundabout Development – Ifrane (Exit to El-Hajeb)', '2023-11-20', 'Technical support and supervision including coordination, quality control, and engineering study.', 'projet2.webp', 'Infrastructure'),
+        ('ISEM Cold Rooms Development', '2022-11-01', 'Technical studies, cost estimation, and site supervision for reliable and compliant installations.', 'projet3.jpg', 'Educational'),
+        ('Bridge Reinforcement – Oued Laou', '2024-06-10', 'Structural reinforcement to improve safety and extend the lifespan of the bridge.', 'projet4.jpg', 'Infrastructure'),
+        ('University Laboratory Expansion – Meknès', '2023-09-05', 'Design, cost estimation, and site supervision for new research labs.', 'projet5.jpg', 'Educational'),
+        ('Urban Park Development – Fès', '2023-04-22', 'Full project management for landscaping, safety measures, and recreational spaces.', 'projet6.jpg', 'Urban Development'),
+        ('Renewable Energy Installation – Taza Technical School', '2022-12-15', 'Solar energy system design and installation for sustainable campus energy supply.', 'projet7.jpg', 'Educational')
     ");
 }
 
@@ -478,52 +469,91 @@ $categories = $categories_stmt->fetchAll(PDO::FETCH_COLUMN);
         }
 
 
-        /* Footer (optional, but good practice to include a basic one) */
+        /* Footer */
         footer {
-            background-color: var(--black-bg);
-            color: var(--text-white);
+            background-color: #0a0a0a;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 50px;
-            font-size: 0.9rem;
+            gap: 2rem;
+            border-top: 1px solid #222;
         }
 
-        footer p {
-            margin-bottom: 0.5rem;
+        footer .logo {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
         }
 
-        footer .social-icons a {
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            padding: 0;
+        }
+
+        .footer-links a {
+            color: rgba(212, 241, 247, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .social-icons a {
             color: var(--text-white);
-            font-size: 1.5rem;
-            margin: 0 10px;
-            transition: var(--transition);
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
         }
 
-        footer .social-icons a:hover {
+        .social-icons a:hover {
             color: var(--primary-color);
             transform: scale(1.2);
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
         }
 
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">GC Trad</div>
+        <div class="logo" style="display: flex; align-items: center; height: 100%;">
+            <img src="logo.jpg" alt="GC Trad Logo" style="height: 2.8rem; width: auto; margin-right: 0.7rem;">
+        </div>
         <nav class="nav-links">
-            <a href="acceuil.php" data-key="navHome">Home</a>
+            <a href="acceuil.html" data-key="navHome">Home</a>
             <div class="dropdown">
                 <a href="#entreprise" data-key="navCompany">Entreprise <i class="fas fa-caret-down"></i></a>
                 <div class="dropdown-content">
-                    <a href="aboutus.php" data-key="navAboutUs">About us</a>
+                    <a href="aboutus.html" data-key="navAboutUs">About us</a>
                     <a href="whyus.php" data-key="navWhyUs">Why us</a>
                     <a href="team.php" data-key="navOurTeam">Our team</a>
                     <a href="client.php" data-key="navClients">Clients</a>
                     <a href="career.php" data-key="navCareer">Career</a>
                 </div>
             </div>
-            <a href="contact.php" data-key="navContact">Contact</a>
+            <a href="contact.html" data-key="navContact">Contact</a>
             <a href="faq.php" data-key="navFAQ">FAQ</a>
-            <button onclick="location.href='contact.php'" data-key="btnContactUs">Contact Us</button>
+            <button onclick="location.href='contact.html'" data-key="btnContactUs">Contact Us</button>
             <i class="fas fa-globe lang-toggle" id="langToggle" title="Toggle Language"></i>
         </nav>
     </header>
@@ -535,7 +565,7 @@ $categories = $categories_stmt->fetchAll(PDO::FETCH_COLUMN);
         </div>
         <div class="description-box" id="about-section">
             <h2 data-key="aboutSectionTitle">PROJECTS</h2>
-            <p data-key="aboutSectionText">The Engineering Enterprise has worked on thousands of projects since our inception in 1974. The project page links below offer a summary of our work by project type. Each project category encompasses multiple examples of completed projects for which we designed the electrical and/or low voltage systems. Our firm can handle projects of any size and complexity.</p>
+            <p data-key="aboutSectionText">Depuis sa création en 2019, GCTRAD a travaillé sur de nombreux projets dans différents domaines. Les liens de la page projet ci-dessous offrent un résumé de notre travail par type de projet. Chaque catégorie présente plusieurs réalisations achevées où nous avons assuré les études techniques, la coordination, le métré précis et le contrôle qualité. Notre entreprise est capable de gérer des projets de toute taille et complexité.</p>
         </div>
     </section>
 
@@ -562,15 +592,22 @@ $categories = $categories_stmt->fetchAll(PDO::FETCH_COLUMN);
     </section>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 GC Trad. All rights reserved.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
+        <div class="logo" style="display: flex; align-items: center; height: 100%;">
+            <img src="logo.jpg" alt="GC Trad Logo" style="height: 7rem; width: auto; margin-right: 0.7rem;">
         </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/GCTRAD" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/gctrad.ma?igsh=ZWhqdjFqbmpxOXg1" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/gctrad/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <ul class="footer-links">
+            <li><a href="acceuil.html" data-key="footerHome">Home</a></li>
+            <li><a href="team.php" data-key="footerTeam">Team</a></li>
+            <li><a href="aboutus.html" data-key="footerAbout">About</a></li>
+            <li><a href="contact.html" data-key="footerContact">Contact</a></li>
+            <li><a href="faq.php" data-key="footerFAQ">FAQ</a></li>
+        </ul>
+        <p class="footer-copyright" data-key="footerCopyright">&copy; 2025 GC Trad. All rights reserved.</p>
     </footer>
 
     <script>
@@ -583,27 +620,33 @@ $categories = $categories_stmt->fetchAll(PDO::FETCH_COLUMN);
                 });
             });
 
-            // Project filtering logic
+            // Project filtering logic - ROBUST VERSION
+            function normalizeCategory(str) {
+                return str.trim().toLowerCase().replace(/\s+/g, '-');
+            }
+
             const categoryLinks = document.querySelectorAll('.titles a');
             const projectCards = document.querySelectorAll('.project-card');
 
             categoryLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
-                    e.preventDefault(); // Prevent default anchor link behavior
+                    e.preventDefault();
 
-                    // Remove active class from all links
                     categoryLinks.forEach(l => l.classList.remove('active-category'));
-                    // Add active class to the clicked link
                     this.classList.add('active-category');
 
-                    const selectedCategory = this.dataset.category;
+                    const selectedCategory = normalizeCategory(this.dataset.category);
 
                     projectCards.forEach(card => {
-                        const cardCategory = card.dataset.category;
+                        const cardCategory = normalizeCategory(card.dataset.category);
                         if (selectedCategory === 'all' || cardCategory === selectedCategory) {
-                            card.style.display = 'block'; // Show the card
+                            card.style.display = 'block';
+                            card.style.opacity = '0';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                            }, 10);
                         } else {
-                            card.style.display = 'none'; // Hide the card
+                            card.style.display = 'none';
                         }
                     });
                 });
@@ -628,12 +671,16 @@ $categories = $categories_stmt->fetchAll(PDO::FETCH_COLUMN);
                     'heroTitle': 'Our Projects',
                     // Description Box
                     'aboutSectionTitle': 'PROJECTS',
-                    'aboutSectionText': 'The Engineering Enterprise has worked on thousands of projects since our inception in 1974. The project page links below offer a summary of our work by project type. Each project category encompasses multiple examples of completed projects for which we designed the electrical and/or low voltage systems. Our firm can handle projects of any size and complexity.',
+                    'aboutSectionText': 'Since its creation in 2019, GCTRAD has worked on numerous projects across different fields. The project page links below provide a summary of our work by project type. Each category highlights multiple completed projects where we delivered engineering studies, project coordination, precise measurement, and quality control. Our company is capable of managing projects of any size and complexity.',
                     // Project Categories (only 'All' needs a data-key as others are dynamic)
                     'categoryAll': 'All',
-                    // Note: Project names from DB won't be translated by this JS.
-                    // If project names need translation, they should be stored in the DB in multiple languages
-                    // or fetched from a different translation source.
+                    //footer
+                    'footerHome': "Home",
+                    'footerTeam': "Team",
+                    'footerAbout': "About",
+                    'footerContact': "Contact",
+                    'footerFAQ': "FAQ",
+                    'footerCopyright': "&copy; 2025 GC Trad. All rights reserved."
                 },
                 'fr': {
                     // Navigation
@@ -651,13 +698,20 @@ $categories = $categories_stmt->fetchAll(PDO::FETCH_COLUMN);
                     'heroTitle': 'Nos Projets',
                     // Description Box
                     'aboutSectionTitle': 'PROJETS',
-                    'aboutSectionText': 'The Engineering Enterprise a travaillé sur des milliers de projets depuis sa création en 1974. Les liens de la page de projet ci-dessous offrent un résumé de notre travail par type de projet. Chaque catégorie de projet englobe de multiples exemples de projets achevés pour lesquels nous avons conçu les systèmes électriques et/ou à basse tension. Notre entreprise peut gérer des projets de toute taille et complexité.',
+                    'aboutSectionText': 'Depuis sa création en 2019, GCTRAD a travaillé sur de nombreux projets dans différents domaines. Les liens de la page projet ci-dessous offrent un résumé de notre travail par type de projet. Chaque catégorie présente plusieurs réalisations achevées où nous avons assuré les études techniques, la coordination, le métré précis et le contrôle qualité. Notre entreprise est capable de gérer des projets de toute taille et complexité.',
                     // Project Categories
                     'categoryAll': 'Tout',
+                    // Footer
+                    'footerHome': "Accueil",
+                    'footerTeam': "Équipe",
+                    'footerAbout': "À propos",
+                    'footerContact': "Contact",
+                    'footerFAQ': "FAQ",
+                    'footerCopyright': "&copy; 2025 GC Trad. Tous droits réservés."
                 }
             };
 
-            let currentLanguage = 'fr'; // Default language
+            let currentLanguage = 'en'; // Default language
 
             // Function to update content based on the current language
             function updateContent() {
@@ -683,15 +737,7 @@ $categories = $categories_stmt->fetchAll(PDO::FETCH_COLUMN);
                     entrepriseLink.innerHTML = `${baseText} <i class="fas fa-caret-down"></i>`;
                 }
 
-                // Translate dynamic category links
-                // This will only translate the category names if they match exact keys in 'translations'.
-                // For categories fetched from the DB, you'd need a more complex solution (e.g., storing translated categories in DB or a separate JSON).
-                // For simplicity, I'm assuming you want to translate the *display* of the category names
-                // if they are static or can be mapped.
-                // For now, only 'All' is directly translatable via data-key.
-                // If the categories themselves (like 'Higher Ed', 'Civic') need translation,
-                // you would need to store translations for them in the 'translations' object or fetch them
-                // in the correct language from the database.
+                
             }
 
             // Event listener for the language toggle icon

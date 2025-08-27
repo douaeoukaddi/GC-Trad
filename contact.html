@@ -333,50 +333,89 @@
 
         /* Footer */
         footer {
-            background-color: var(--black-bg);
-            color: var(--text-white);
+            background-color: #0a0a0a;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 50px;
-            font-size: 0.9rem;
+            gap: 2rem;
+            border-top: 1px solid #222;
         }
 
-        footer p {
-            margin-bottom: 0.5rem;
+        footer .logo {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
         }
 
-        footer .social-icons a {
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            padding: 0;
+        }
+
+        .footer-links a {
+            color: rgba(212, 241, 247, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .social-icons a {
             color: var(--text-white);
-            font-size: 1.5rem;
-            margin: 0 10px;
-            transition: var(--transition);
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
         }
 
-        footer .social-icons a:hover {
+        .social-icons a:hover {
             color: var(--primary-color);
             transform: scale(1.2);
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
         }
 
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">GC Trad</div>
+        <div class="logo" style="display: flex; align-items: center; height: 100%;">
+            <img src="logo.jpg" alt="GC Trad Logo" style="height: 2.8rem; width: auto; margin-right: 0.7rem;">
+        </div>
         <nav class="nav-links">
-            <a href="acceuil.php" data-key="navHome">Home</a>
+            <a href="acceuil.html" data-key="navHome">Home</a>
             <div class="dropdown">
                 <a href="#entreprise" data-key="navCompany">Entreprise <i class="fas fa-caret-down"></i></a>
                 <div class="dropdown-content">
-                    <a href="aboutus.php" data-key="navAboutUs">About us</a>
+                    <a href="aboutus.html" data-key="navAboutUs">About us</a>
                     <a href="whyus.php" data-key="navWhyUs">Why us</a>
                     <a href="team.php" data-key="navOurTeam">Our team</a>
                     <a href="client.php" data-key="navClients">Clients</a>
                     <a href="career.php" data-key="navCareer">Career</a>
                 </div>
             </div>
-            <a href="contact.php" data-key="navContact">Contact</a>
+            <a href="contact.html" data-key="navContact">Contact</a>
             <a href="faq.php" data-key="navFAQ">FAQ</a>
-            <button onclick="location.href='contact.php'" data-key="btnContactUs">Contact Us</button>
+            <button onclick="location.href='contact.html'" data-key="btnContactUs">Contact Us</button>
             <i class="fas fa-globe lang-toggle" id="langToggle" title="Toggle Language"></i>
         </nav>
     </header>
@@ -430,15 +469,22 @@
     </section>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 GC Trad. All rights reserved.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
+        <div class="logo" style="display: flex; align-items: center; height: 100%;">
+            <img src="logo.jpg" alt="GC Trad Logo" style="height: 7rem; width: auto; margin-right: 0.7rem;">
         </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/GCTRAD" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/gctrad.ma?igsh=ZWhqdjFqbmpxOXg1" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/gctrad/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <ul class="footer-links">
+            <li><a href="acceuil.html" data-key="footerHome">Home</a></li>
+            <li><a href="team.php" data-key="footerTeam">Team</a></li>
+            <li><a href="aboutus.html" data-key="footerAbout">About</a></li>
+            <li><a href="career.php" data-key="footerCareer">Career</a></li>
+            <li><a href="faq.php" data-key="footerFAQ">FAQ</a></li>
+        </ul>
+        <p class="footer-copyright" data-key="footerCopyright">&copy; 2025 GC Trad. All rights reserved.</p>
     </footer>
 
     <script>
@@ -475,7 +521,14 @@
                     'contactEmailStrong': 'Email:',
                     'contactEmailContent': 'contact@gctrad.ma', // Updated English email
                     'contactBusinessHoursStrong': 'Business Hours:',
-                    'contactBusinessHoursContent': 'Monday - Friday, 9:00 AM - 5:00 PM'
+                    'contactBusinessHoursContent': 'Monday - Friday, 9:00 AM - 5:00 PM',
+                    //footer
+                    'footerHome': "Home",
+                    'footerTeam': "Team",
+                    'footerAbout': "About",
+                    'footerCareer': "Career",
+                    'footerFAQ': "FAQ",
+                    'footerCopyright': "&copy; 2025 GC Trad. All rights reserved."
                 },
                 'fr': {
                     // Navigation
@@ -507,11 +560,18 @@
                     'contactEmailStrong': 'E-mail :',
                     'contactEmailContent': 'contact@gctrad.ma', // Updated French email
                     'contactBusinessHoursStrong': 'Heures de bureau :',
-                    'contactBusinessHoursContent': 'Du lundi au vendredi, de 9h00 à 17h00'
+                    'contactBusinessHoursContent': 'Du lundi au vendredi, de 9h00 à 17h00',
+                    // Footer
+                    'footerHome': "Accueil",
+                    'footerTeam': "Équipe",
+                    'footerAbout': "À propos",
+                    'footerCareer': "Carrières",
+                    'footerFAQ': "FAQ",
+                    'footerCopyright': "&copy; 2025 GC Trad. Tous droits réservés."
                 }
             };
 
-            let currentLanguage = 'fr'; // Default language
+            let currentLanguage = 'en'; // Default language
 
             function updateContent() {
                 document.querySelectorAll('[data-key]').forEach(element => {

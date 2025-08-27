@@ -343,7 +343,7 @@
 
         /* Our Team Section (Engent's 'Team') */
         .our-team-section {
-            background-image: url('acceuil4.png?v=2'); /* Another example background */
+            background-image: url('acceuil8.png?v=3'); /* Another example background */
         }
         .our-team-section .section-overlay {
             background-color: rgba(0, 0, 0, 0.6);
@@ -371,14 +371,28 @@
             transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.12);
         }
-        .team-member img {
+        
+        /* Team member icon styling - Remplace les images */
+        .team-member-icon {
             width: 120px;
-            height: 140px;
-            border-radius: 30%; /* Circular images */
-            object-fit: cover;
-            margin-bottom: 1rem;
-            border: 3px solid var(--primary-color); /* Primary color border */
+            height: 120px;
+            margin: 0 auto 1rem auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: var(--text-dark);
+            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.3);
+            transition: var(--transition);
         }
+        
+        .team-member:hover .team-member-icon {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 184, 0, 0.4);
+        }
+        
         .team-member h3 {
             color: var(--text-white);
             font-size: clamp(1.1rem, 2.5vw, 1.4rem);
@@ -392,7 +406,7 @@
 
         /* Services Section (Engent's 'Areas of Practice') */
         .services-section {
-            background-image: url('acceuil4.png?v=2'); /* Another example background */
+            background-image: url('acceuil8.png?v=3'); /* Another example background */
         }
         .services-section .section-overlay {
             background-color: rgba(0, 0, 0, 0.7);
@@ -689,22 +703,24 @@
 </head>
 <body>
     <header>
-        <div class="logo">GC Trad</div>
+        <div class="logo" style="display: flex; align-items: center; height: 100%;">
+            <img src="logo.jpg" alt="GC Trad Logo" style="height: 2.8rem; width: auto; margin-right: 0.7rem;">
+        </div>
         <nav class="nav-links">
-            <a href="acceuil.php" data-key="navHome">Home</a>
+            <a href="acceuil.html" data-key="navHome">Home</a>
             <div class="dropdown">
                 <a href="#entreprise" data-key="navCompany">Entreprise ▼</a>
                 <div class="dropdown-content">
-                    <a href="aboutus.php" data-key="navAboutUs">About us</a>
+                    <a href="aboutus.html" data-key="navAboutUs">About us</a>
                     <a href="whyus.php" data-key="navWhyUs">Why us</a>
                     <a href="team.php" data-key="navOurTeam">Our team</a>
                     <a href="client.php" data-key="navClients">Clients</a>
                     <a href="career.php" data-key="navCareer">Career</a>
                 </div>
             </div>
-            <a href="contact.php" data-key="navContact">Contact</a>
+            <a href="contact.html" data-key="navContact">Contact</a>
             <a href="faq.php" data-key="navFAQ">FAQ</a>
-            <button onclick="location.href='contact.php'" data-key="btnContactUs">Contact Us</button>
+            <button onclick="location.href='contact.html'" data-key="btnContactUs">Contact Us</button>
             <i class="fas fa-globe lang-toggle" id="langToggle" title="Toggle Language"></i>
         </nav>
     </header>
@@ -715,7 +731,7 @@
             <h1 class="hero-title" data-key="heroTitle">Welcome to GC Trad</h1>
             <p class="hero-subtitle" data-key="heroSubtitle">Building the future with strength, precision, and trust.</p>
             <div class="hero-buttons">
-                <button onclick="location.href='aboutus.php'" data-key="btnLearnMore">Learn More</button>
+                <button onclick="location.href='aboutus.html'" data-key="btnLearnMore">Learn More</button>
             </div>
         </div>
     </section>
@@ -728,8 +744,8 @@
                     <h1>GC Trad</h1>
                 </div>
                 <div class="about-right hidden">
-                    <p data-key="aboutText">Civil engineering company specialized in the design, management, and execution of construction projects. We offer tailored solutions for residential, commercial, and infrastructure developments, with a strong focus on quality, safety, and sustainability. Our mission is to deliver reliable, efficient, and innovative engineering services that meet the highest industry standards.</p>
-                    <button onclick="location.href='aboutus.php'" data-key="btnMoreDetails">More Details</button>
+                    <p data-key="aboutText">GCTRAD is a consulting and engineering firm specializing in technical expertise across the building, infrastructure, and urban development sectors. It supports public and private clients throughout every stage of their projects — from feasibility studies and design to project management assistance, supervision, and execution monitoring. Backed by a multidisciplinary and experienced team, GCTRAD is committed to delivering reliable, innovative solutions that meet the highest industry standards.</p>
+                    <button onclick="location.href='aboutus.html'" data-key="btnMoreDetails">More Details</button>
                 </div>
             </div>
         </div>
@@ -742,21 +758,34 @@
             <p class="hidden" data-key="teamSubtitle">Meet the dedicated professionals who drive our success and deliver exceptional results on every project.</p>
             <div class="team-grid">
                 <div class="team-member hidden">
-                    <img src="acceuil1.png" alt="Team Member 1">
-                    <h3>John Doe</h3>
-                    <p data-key="teamMember1Task">Lead Engineer</p>
+                    <div class="team-member-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Taoufik Hajji</h3>
+                    <p data-key="teamMember1Task">State-certified Civil Engineer<br>Manager and CEO of the company "Génie Civil Trad (GCTRAD)"</p>
                 </div>
                 <div class="team-member hidden">
-                    <img src="acceuil1.png" alt="Team Member 2">
-                    <h3>Jane Smith</h3>
-                    <p data-key="teamMember2Task">Project Manager</p>
+                    <div class="team-member-icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h3>Aya Seddik</h3>
+                    <p data-key="teamMember2Task">Specialized Technician in Structural Works</p>
                 </div>
                 <div class="team-member hidden">
-                    <img src="acceuil1.png" alt="Team Member 3">
-                    <h3>Mike Johnson</h3>
-                    <p data-key="teamMember3Task">Site Supervisor</p>
+                    <div class="team-member-icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h3>Nadia Maazouz</h3>
+                    <p data-key="teamMember3Task">Specialized Technician in Civil Engineering</p>
                 </div>
+                <div class="team-member hidden">
+                    <div class="team-member-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h3>Yassine Hoiass</h3>
+                    <p data-key="teamMember4Task">Site Manager</p>
                 </div>
+            </div>
             <button onclick="location.href='team.php'" class="hidden" data-key="btnTeamMoreDetails">More Details</button>
         </div>
     </section>
@@ -768,16 +797,20 @@
             <p class="hidden" data-key="servicesSubtitle">At GC Trad, we provide a wide range of civil engineering services tailored to meet the needs of construction, infrastructure, and development projects.</p>
             <div class="services-grid">
                 <div class="service-item hidden">
-                    <h3 data-key="service1Title">Structural Design</h3>
-                    <p data-key="service1Desc">Innovative and safe structural solutions for buildings and infrastructure.</p>
+                    <h3 data-key="service1Title">OPC</h3>
+                    <p data-key="service1Desc">Optimized planning, coordination, and site supervision.</p>
                 </div>
                 <div class="service-item hidden">
-                    <h3 data-key="service2Title">Project Management</h3>
-                    <p data-key="service2Desc">Comprehensive oversight from planning to completion, ensuring efficiency.</p>
+                    <h3 data-key="service2Title">Technical Studies</h3>
+                    <p data-key="service2Desc">Efficient design and sizing of structures, MEP, and utilities.</p>
                 </div>
                 <div class="service-item hidden">
-                    <h3 data-key="service3Title">Construction Consulting</h3>
-                    <p data-key="service3Desc">Expert advice and strategic planning for complex construction challenges.</p>
+                    <h3 data-key="service3Title">Quantity Surveying</h3>
+                    <p data-key="service3Desc">Accurate measurement for reliable budgeting.</p>
+                </div>
+                <div class="service-item hidden">
+                    <h3 data-key="service4Title">Quality Control</h3>
+                    <p data-key="service4Desc">Expert inspections ensuring compliance and performance.</p>
                 </div>
             </div>
             <button onclick="location.href='whyus.php'" class="hidden" data-key="btnServicesSeeMore">See More</button>
@@ -791,24 +824,24 @@
             <p class="hidden" data-key="projectsSubtitle">Discover our most impactful projects, showcasing our expertise. From infrastructure development to structural design.</p>
             <div class="projects-grid">
                 <div class="project-item hidden">
-                    <img src="acceuil1.png" alt="Project 1">
+                    <img src="projet1.jpg" alt="Project 1">
                     <div class="project-info">
-                        <h3 data-key="project1Title">Urban Revitalization</h3>
-                        <p data-key="project1Desc">A multi-phase project enhancing public spaces and urban connectivity.</p>
+                        <h3 data-key="project1Title">Morgue Renovation Project – Tetouan Provincial Hospital</h3>
+                        <p data-key="project1Desc">A multi-phase project improving safety, hygiene, and compliance.</p>
                     </div>
                 </div>
                 <div class="project-item hidden">
-                    <img src="acceuil1.png" alt="Project 2">
+                    <img src="projet2.webp" alt="Project 2">
                     <div class="project-info">
-                        <h3 data-key="project2Title">Commercial Complex</h3>
-                        <p data-key="project2Desc">Designed and built a state-of-the-art commercial hub with sustainable features.</p>
+                        <h3 data-key="project2Title">Roundabout Development – Ifrane (Exit to El-Hajeb)</h3>
+                        <p data-key="project2Desc">Technical support and supervision including coordination, quality control, and engineering study.</p>
                     </div>
                 </div>
                 <div class="project-item hidden">
-                    <img src="acceuil1.png" alt="Project 3">
+                    <img src="projet3.jpg" alt="Project 3">
                     <div class="project-info">
-                        <h3 data-key="project3Title">Bridge Construction</h3>
-                        <p data-key="project3Desc">Innovative bridge design improving regional transportation links.</p>
+                        <h3 data-key="project3Title">ISEM Cold Rooms Development</h3>
+                        <p data-key="project3Desc">Technical studies, cost estimation, and site supervision for reliable and compliant installations.</p>
                     </div>
                 </div>
             </div>
@@ -846,23 +879,24 @@
                     <p>336, Mag N°1 lot Dakhla Sidi Said. Meknes</p>
                 </div>
             </div>
-            <button onclick="location.href='contact.php'" class="hidden" data-key="btnGetInTouch">Get In Touch</button>
+            <button onclick="location.href='contact.html'" class="hidden" data-key="btnGetInTouch">Get In Touch</button>
         </div>
     </section>
 
     <footer>
-        <div class="logo">GC Trad</div>
+        <div class="logo" style="display: flex; align-items: center; height: 100%;">
+            <img src="logo.jpg" alt="GC Trad Logo" style="height: 7rem; width: auto; margin-right: 0.7rem;">
+        </div>
         <div class="social-icons">
-            <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.facebook.com/GCTRAD" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/gctrad.ma?igsh=ZWhqdjFqbmpxOXg1" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/gctrad/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <ul class="footer-links">
             <li><a href="team.php" data-key="footerTeam">Team</a></li>
-            <li><a href="aboutus.php" data-key="footerAbout">About</a></li>
+            <li><a href="aboutus.html" data-key="footerAbout">About</a></li>
             <li><a href="career.php" data-key="footerCareer">Career</a></li>
-            <li><a href="contact.php" data-key="footerContact">Contact</a></li>
+            <li><a href="contact.html" data-key="footerContact">Contact</a></li>
             <li><a href="faq.php" data-key="footerFAQ">FAQ</a></li>
         </ul>
         <p class="footer-copyright" data-key="footerCopyright">&copy; 2025 GC Trad. All rights reserved.</p>
@@ -874,7 +908,7 @@
             en: {
                 // Navigation
                 navHome: "Home",
-                navCompany: "Company ▼",
+                navCompany: "Entreprise ▼",
                 navAboutUs: "About us",
                 navWhyUs: "Why us",
                 navOurTeam: "Our team",
@@ -891,41 +925,40 @@
                 btnLearnMore: "Learn More",
 
                 // About Us Section
-                aboutText: "Civil engineering company specialized in the design, management, and execution of construction projects. We offer tailored solutions for residential, commercial, and infrastructure developments, with a strong focus on quality, safety, and sustainability. Our mission is to deliver reliable, efficient, and innovative engineering services that meet the highest industry standards.",
+                aboutText: "GCTRAD is a consulting and engineering firm specializing in technical expertise across the building, infrastructure, and urban development sectors. It supports public and private clients throughout every stage of their projects — from feasibility studies and design to project management assistance, supervision, and execution monitoring. Backed by a multidisciplinary and experienced team, GCTRAD is committed to delivering reliable, innovative solutions that meet the highest industry standards.",
                 btnMoreDetails: "More Details",
 
                 // Our Team Section
-                teamTitle: "Our Best Team",
+                teamTitle: "Our Team",
                 teamSubtitle: "Meet the dedicated professionals who drive our success and deliver exceptional results on every project.",
-                teamMember1Task: "Lead Engineer",
-                teamMember2Task: "Project Manager",
-                teamMember3Task: "Site Supervisor",
+                teamMember1Task: "State-certified Civil Engineer<br>Manager and CEO of the company \"Génie Civil Trad (GCTRAD)\"",
+                teamMember2Task: "Specialized Technician in Structural Works",
+                teamMember3Task: "Specialized Technician in Civil Engineering",
+                teamMember4Task: "Site Manager",
                 btnTeamMoreDetails: "More Details",
 
                 // Services Section
-                servicesTitle: "Our Best Services",
+                servicesTitle: "Our Services",
                 servicesSubtitle: "At GC Trad, we provide a wide range of civil engineering services tailored to meet the needs of construction, infrastructure, and development projects.",
-                service1Title: "Structural Design",
-                service1Desc: "Innovative and safe structural solutions for buildings and infrastructure.",
-                service2Title: "Project Management",
-                service2Desc: "Comprehensive oversight from planning to completion, ensuring efficiency.",
-                service3Title: "Construction Consulting",
-                service3Desc: "Expert advice and strategic planning for complex construction challenges.",
-                service4Title: "Infrastructure Development",
-                service4Desc: "Designing and building essential public and private infrastructure.",
+                service1Title: "OPC",
+                service1Desc: "Optimized planning, coordination, and site supervision.",
+                service2Title: "Technical Studies",
+                service2Desc: "Efficient design and sizing of structures, MEP, and utilities.",
+                service3Title: "Quantity Surveying",
+                service3Desc: "Accurate measurement for reliable budgeting.",
+                service4Title: "Quality Control",
+                service4Desc: "Expert inspections ensuring compliance and performance.",
                 btnServicesSeeMore: "See More",
 
                 // Projects Section
                 projectsTitle: "Latest Projects",
                 projectsSubtitle: "Discover our most impactful projects, showcasing our expertise. From infrastructure development to structural design.",
-                project1Title: "Urban Revitalization",
-                project1Desc: "A multi-phase project enhancing public spaces and urban connectivity.",
-                project2Title: "Commercial Complex",
-                project2Desc: "Designed and built a state-of-the-art commercial hub with sustainable features.",
-                project3Title: "Bridge Construction",
-                project3Desc: "Innovative bridge design improving regional transportation links.",
-                project4Title: "Residential Towers",
-                project4Desc: "Modern residential buildings offering premium living spaces.",
+                project1Title: "Morgue Renovation Project – Tetouan Provincial Hospital",
+                project1Desc: "A multi-phase project improving safety, hygiene, and compliance.",
+                project2Title: "Roundabout Development – Ifrane (Exit to El-Hajeb)",
+                project2Desc: "Technical support and supervision including coordination, quality control, and engineering study.",
+                project3Title: "ISEM Cold Rooms Development",
+                project3Desc: "Technical studies, cost estimation, and site supervision for reliable and compliant installations.",
                 btnProjectsReadMore: "View All Projects",
 
                 // Why Clients Trust Us Section
@@ -969,41 +1002,40 @@
                 btnLearnMore: "En savoir plus",
 
                 // About Us Section
-                aboutText: "GC Trad est une entreprise de génie civil spécialisée dans la conception, la gestion et l'exécution de projets de construction. Nous offrons des solutions sur mesure pour les développements résidentiels, commerciaux et d'infrastructures, avec un accent fort sur la qualité, la sécurité et la durabilité. Notre mission est de fournir des services d'ingénierie fiables, efficaces et innovants qui répondent aux normes les plus élevées de l'industrie.",
+                aboutText: "GCTRAD est un bureau d'études spécialisé dans l'ingénierie technique et le conseil, intervenant dans les domaines du bâtiment, des infrastructures et de l'aménagement. Il accompagne ses clients publics et privés à travers toutes les phases de leurs projets : études de faisabilité, conception, assistance à la maîtrise d'ouvrage, suivi et contrôle de l'exécution. Grâce à une équipe pluridisciplinaire et expérimentée, GCTRAD s'engage à fournir des solutions fiables, innovantes et conformes aux normes en vigueur",
                 btnMoreDetails: "Plus de détails",
 
                 // Our Team Section
                 teamTitle: "Notre meilleure équipe",
                 teamSubtitle: "Rencontrez les professionnels dévoués qui mènent notre succès et livrent des résultats exceptionnels sur chaque projet.",
-                teamMember1Task: "Ingénieur principal",
-                teamMember2Task: "Chef de projet",
-                teamMember3Task: "Superviseur de site",
+                teamMember1Task: "Ingénieur d'état en génie civil<br>Gérant et directeur général de la société Génie civil trad \"gctrad\"",
+                teamMember2Task: "Technicienne spécialisée en gros oeuvre",
+                teamMember3Task: "Technicienne spécialisée en génie civil",
+                teamMember4Task: "Chef de chantier",
                 btnTeamMoreDetails: "Plus de détails",
 
                 // Services Section
                 servicesTitle: "Nos meilleurs services",
                 servicesSubtitle: "Chez GC Trad, nous offrons une large gamme de services d'ingénierie civile adaptés aux besoins des projets de construction, d'infrastructure et de développement.",
-                service1Title: "Conception structurelle",
-                service1Desc: "Solutions structurelles innovantes et sûres pour les bâtiments et les infrastructures.",
-                service2Title: "Gestion de projet",
-                service2Desc: "Supervision complète de la planification à l'achèvement, garantissant l'efficacité.",
-                service3Title: "Conseil en construction",
-                service3Desc: "Conseils d'experts et planification stratégique pour les défis de construction complexes.",
-                service4Title: "Développement d'infrastructures",
-                service4Desc: "Conception et construction d'infrastructures publiques et privées essentielles.",
+                service1Title: "OPC",
+                service1Desc: "Planification optimisée, coordination et supervision de chantier.",
+                service2Title: "Études techniques",
+                service2Desc: "Conception et dimensionnement efficaces des structures, MEP et utilités.",
+                service3Title: "Métrés",
+                service3Desc: "Mesures précises pour une budgétisation fiable.",
+                service4Title: "Contrôle qualité",
+                service4Desc: "Inspections d'experts garantissant la conformité et les performances.",
                 btnServicesSeeMore: "Voir plus",
 
                 // Projects Section
                 projectsTitle: "Derniers projets",
                 projectsSubtitle: "Découvrez nos projets les plus impactants, démontrant notre expertise. Du développement d'infrastructures à la conception structurelle.",
-                project1Title: "Revitalisation urbaine",
-                project1Desc: "Un projet en plusieurs phases améliorant les espaces publics et la connectivité urbaine.",
-                project2Title: "Complexe commercial",
-                project2Desc: "Conception et construction d'un pôle commercial de pointe avec des caractéristiques durables.",
-                project3Title: "Construction de ponts",
-                project3Desc: "Conception de ponts innovante améliorant les liaisons de transport régionales.",
-                project4Title: "Tours résidentielles",
-                project4Desc: "Bâtiments résidentiels modernes offrant des espaces de vie de qualité supérieure.",
+                project1Title: "Projet de rénovation de la morgue – Hôpital Provincial de Tétouan",
+                project1Desc: "Un projet en plusieurs phases améliorant la sécurité, l'hygiène et la conformité.",
+                project2Title: "Aménagement d’un giratoire – Ifrane (Sortie vers El-Hajeb)",
+                project2Desc: "Suivi et assistance technique incluant coordination, contrôle qualité et étude technique.",
+                project3Title: "Aménagement des chambres froides de l’ISEM",
+                project3Desc: "Études techniques, estimation et suivi de chantier pour des installations fiables et conformes.",
                 btnProjectsReadMore: "Voir tous les projets",
 
                 // Why Clients Trust Us Section
